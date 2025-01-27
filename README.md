@@ -4,7 +4,7 @@
 
 <img width="612" alt="import STL" src="https://github.com/user-attachments/assets/dddbcbf0-cb61-4f53-ad69-a31862f54a1f" />
 
-Since the object sizes are too large and exceed Blender's workspace limits, they are scaled down to 1/50th upon import.
+**Note:** Since the object sizes are too large and exceed Blender's workspace limits, they are scaled down to 1/50th upon import.
 
 
 
