@@ -1,0 +1,42 @@
+import bpy
+import os
+
+# Directory path and initial offsets
+folder_path = '/Users/tkimura/Desktop/manifest-1737770826064/STL'
+x_move = 0
+y_move = 7.5
+z_move = 0
+
+# Get a list of STL file paths
+file_paths = [
+    os.path.join(folder_path, filename)
+    for filename in os.listdir(folder_path)
+    if os.path.isfile(os.path.join(folder_path, filename)) and filename.endswith('.stl')
+]
+
+# Get the common prefix of file paths
+common_path = os.path.commonprefix(file_paths)
+
+# Import STL files one by one
+for file_path in file_paths:
+    # Extract the file name and object name
+    name = os.path.basename(file_path)
+    obj_name = os.path.splitext(name)[0]
+
+    # Import the STL file
+    bpy.ops.import_mesh.stl(filepath=file_path)
+
+    # Get the imported object
+    obj = bpy.context.selected_objects[0]
+    obj.name = obj_name
+
+    # Resize the object
+    size = 0.02
+    obj.scale = (size, size, size)
+
+    # Adjust rotation and position
+    obj.rotation_euler[0] = -1.5708  # Rotate around the X-axis
+    obj.location = (x_move, y_move, z_move)
+
+# rename object
+    obj.name = obj.name[len(common_path)-len(folder_path)-1:]
