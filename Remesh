@@ -1,13 +1,7 @@
 import bpy
 
 def remesh_selected_objects(voxel_size=3, remesh_mode='VOXEL'):
-    """
-    Script to remesh multiple selected objects in Blender.
-
-    Parameters:
-        voxel_size (float): Voxel size (used in VOXEL mode)
-        remesh_mode (str): Remesh mode ('VOXEL', 'QUAD', 'SMOOTH', 'SHARP')
-    """
+    
     # Get selected mesh objects
     selected_objects = [obj for obj in bpy.context.selected_objects if obj.type == 'MESH']
     
