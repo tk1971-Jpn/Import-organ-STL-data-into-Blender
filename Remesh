@@ -1,0 +1,37 @@
+import bpy
+
+def remesh_selected_objects(voxel_size=3, remesh_mode='VOXEL'):
+    """
+    Script to remesh multiple selected objects in Blender.
+
+    Parameters:
+        voxel_size (float): Voxel size (used in VOXEL mode)
+        remesh_mode (str): Remesh mode ('VOXEL', 'QUAD', 'SMOOTH', 'SHARP')
+    """
+    # Get selected mesh objects
+    selected_objects = [obj for obj in bpy.context.selected_objects if obj.type == 'MESH']
+    
+    if not selected_objects:
+        print("No mesh objects selected.")
+        return
+
+    # Apply the remesh modifier to each object
+    for obj in selected_objects:
+        # Set the active object
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.modifier_add(type='REMESH')
+        
+        # Configure the remesh modifier
+        modifier = obj.modifiers[-1]  # Get the latest added modifier
+        modifier.mode = remesh_mode   # Set remesh mode ('VOXEL', 'QUAD', 'SMOOTH', 'SHARP')
+
+        if remesh_mode == 'VOXEL':
+            modifier.voxel_size = voxel_size  # Set voxel size
+
+        # Apply the remesh modifier
+        bpy.ops.object.modifier_apply(modifier=modifier.name)
+
+    print(f"Remeshed {len(selected_objects)} objects successfully.")
+
+# Run the script
+remesh_selected_objects(voxel_size=3, remesh_mode='VOXEL')
