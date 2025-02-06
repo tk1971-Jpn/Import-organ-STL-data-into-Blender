@@ -9,3 +9,5 @@
 In the script, specify the directory where the STL data is stored in the `folder_path` variable. Adjust the values of `x_move`, `y_move`, and `z_move` in the script to modify the import position.
 
 **Note:** In 3D Slicer, surface data may sometimes be extracted as a mirrored object. In such cases, please use the script for mirrored objects.
+
+**option:** To reduce the file size, copy and paste `Remesh` file into Blender's script mode and remesh all objects at once. (The default voxel size is 3.)
