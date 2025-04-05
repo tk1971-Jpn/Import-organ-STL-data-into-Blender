@@ -1,0 +1,41 @@
+import bpy
+
+# コレクション名と対応するオブジェクト名リストの辞書
+collection_dict = {
+    "Bone": ["costal cartilage", "L1 vertebra", "L2 vertebra", "L3 vertebra", "L4 vertebra", "L5 vertebra", 
+    "left rib 5", "left rib 6", "left rib 7","left rib 8", "left rib 9", "left rib 10","left rib 11","left rib 12",
+    "right rib 5", "right rib 6", "right rib 7", "right rib 8", "right rib 9", "right rib 10", "right rib 11", "right rib 12",
+    "skull", "T8 vertebra", "T9 vertebra", "T10 vertebra", "T11 vertebra", "T12 vertebra",
+    "left hip", "right hip", "spinal cord", "sternum"],
+    "Muscle": ["left iliopsoas muscle", "right iliopsoas muscle", "left deep back muscle", "right deep back muscle", 
+    "left deep back muscle","right deep back muscle", "right gluteus medius"],
+    "Thoracic": ["heart", "inferior lobe of left lung", "inferior lobe of right lung", "middle lobe of right lung", "superior lobe of left lung"],
+    "Abdominal":["colon", "duodenum", "esophagus", "gallbladder", "left adrenal gland", "left kidney", "liver", "pancreas", "right adrenal gland", "right kidney", "small bowel", "spleen", "stomach"],
+    "Vessel":["aorta", "inferior vena cava", "left common iliac vein", "portal vein and splenic vein", "right common iliac vein"],
+}
+
+# 各コレクションを作成し、シーンにリンク
+for col_name in collection_dict.keys():
+    if col_name in bpy.data.collections:
+        new_col = bpy.data.collections[col_name]
+    else:
+        new_col = bpy.data.collections.new(col_name)
+        bpy.context.scene.collection.children.link(new_col)
+
+# 各コレクションにオブジェクトを移動
+for col_name, obj_names in collection_dict.items():
+    col = bpy.data.collections[col_name]
+    for obj_name in obj_names:
+        obj = bpy.data.objects.get(obj_name)
+        if obj is None:
+            print(f"オブジェクト '{obj_name}' は見つかりませんでした。スキップします。")
+            continue
+
+        # オブジェクトが他のコレクションに属していれば、外す
+        for user_col in obj.users_collection:
+            user_col.objects.unlink(obj)
+
+        # 対応するコレクションにリンク（追加）
+        col.objects.link(obj)
+
+        print(f"オブジェクト '{obj_name}' を '{col_name}' に移動しました。")
