@@ -16,4 +16,4 @@ In the script, specify the directory where the STL data is stored in the `folder
 
 **option:** To reduce the file size, copy and paste `Remesh` file into Blender's script mode and remesh all objects at once. (The default voxel size is 3.)
 
-**option:** You can automatically sort objects (organs) into collections by executing 'Collection sort'."
+**option:** You can automatically sort objects (organs) into collections by executing `Collection sort`.
