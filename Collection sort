@@ -1,6 +1,6 @@
 import bpy
 
-# コレクション名と対応するオブジェクト名リストの辞書
+# A dictionary of collection names and their corresponding lists of object names.
 collection_dict = {
     "Bone": ["costal cartilage", "L1 vertebra", "L2 vertebra", "L3 vertebra", "L4 vertebra", "L5 vertebra", 
     "left rib 5", "left rib 6", "left rib 7","left rib 8", "left rib 9", "left rib 10","left rib 11","left rib 12",
@@ -14,7 +14,7 @@ collection_dict = {
     "Vessel":["aorta", "inferior vena cava", "left common iliac vein", "portal vein and splenic vein", "right common iliac vein"],
 }
 
-# 各コレクションを作成し、シーンにリンク
+# Create each collection and link it to the scene.
 for col_name in collection_dict.keys():
     if col_name in bpy.data.collections:
         new_col = bpy.data.collections[col_name]
@@ -22,20 +22,20 @@ for col_name in collection_dict.keys():
         new_col = bpy.data.collections.new(col_name)
         bpy.context.scene.collection.children.link(new_col)
 
-# 各コレクションにオブジェクトを移動
+# Move the objects to their respective collections.
 for col_name, obj_names in collection_dict.items():
     col = bpy.data.collections[col_name]
     for obj_name in obj_names:
         obj = bpy.data.objects.get(obj_name)
         if obj is None:
-            print(f"オブジェクト '{obj_name}' は見つかりませんでした。スキップします。")
+            print(f"Object '{obj_name}' was not found. Skipping")
             continue
 
-        # オブジェクトが他のコレクションに属していれば、外す
+        # If an object belongs to other collections, remove it from them.
         for user_col in obj.users_collection:
             user_col.objects.unlink(obj)
 
-        # 対応するコレクションにリンク（追加）
+        # Link (add) it to the corresponding collection.
         col.objects.link(obj)
 
-        print(f"オブジェクト '{obj_name}' を '{col_name}' に移動しました。")
+        print(f"Object '{obj_name}' was moved to '{col_name}' .")
