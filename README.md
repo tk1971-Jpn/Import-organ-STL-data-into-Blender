@@ -15,3 +15,5 @@ In the script, specify the directory where the STL data is stored in the `folder
 **Note:** In 3D Slicer, surface data may sometimes be extracted as a mirrored object. In such cases, please use the script for mirrored objects.
 
 **option:** To reduce the file size, copy and paste `Remesh` file into Blender's script mode and remesh all objects at once. (The default voxel size is 3.)
+
+**option:** You can automatically sort objects (organs) into collections by executing 'collection sort'."
