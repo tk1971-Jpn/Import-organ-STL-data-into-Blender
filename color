@@ -1,63 +1,115 @@
 import bpy
 
-def set_object_color(object_name, color, material_name):
+def create_material(name, color):
     """
-    指定されたオブジェクトに色を設定する関数
+    指定された名前と色でマテリアルを作成する
+    
+    Args:
+        name (str): マテリアル名
+        color (tuple): RGBA値のタプル (R, G, B, A) - 各値は0.0～1.0
+    
+    Returns:
+        Material: 作成されたマテリアルオブジェクト
+    """
+    # 既存のマテリアルがあれば削除
+    if name in bpy.data.materials:
+        bpy.data.materials.remove(bpy.data.materials[name])
+    
+    # 新しいマテリアルを作成
+    material = bpy.data.materials.new(name=name)
+    material.use_nodes = True
+    
+    # ノードを取得
+    nodes = material.node_tree.nodes
+    principled = nodes.get("Principled BSDF")
+    
+    if principled:
+        # Base Colorを設定
+        principled.inputs['Base Color'].default_value = color
+    
+    print(f"マテリアル '{name}' を作成しました - 色: {color}")
+    return material
+
+def apply_material_to_object(object_name, material_name):
+    """
+    指定されたオブジェクトにマテリアルを適用する
     
     Args:
         object_name (str): オブジェクト名
-        color (tuple): RGBA値のタプル (R, G, B, A)
         material_name (str): マテリアル名
+    
+    Returns:
+        bool: 成功したかどうか
     """
     obj = bpy.data.objects.get(object_name)
+    material = bpy.data.materials.get(material_name)
     
-    if obj:
-        # マテリアルを作成
-        material = bpy.data.materials.new(name=material_name)
-        material.use_nodes = True
-        
-        # ノードを取得
-        nodes = material.node_tree.nodes
-        principled = nodes.get("Principled BSDF")
-        
-        if principled:
-            principled.inputs['Base Color'].default_value = color
-        
-        # マテリアルを適用
-        if obj.data.materials:
-            obj.data.materials[0] = material
-        else:
-            obj.data.materials.append(material)
-        
-        print(f"{object_name}が{material_name}になりました！")
+    if not obj:
+        print(f"エラー: オブジェクト '{object_name}' が見つかりません")
+        return False
+    
+    if not material:
+        print(f"エラー: マテリアル '{material_name}' が見つかりません")
+        return False
+    
+    # マテリアルを適用
+    if obj.data.materials:
+        obj.data.materials[0] = material
     else:
-        print(f"{object_name}オブジェクトが見つかりません")
+        obj.data.materials.append(material)
+    
+    print(f"'{material_name}' を '{object_name}' に適用しました")
+    return True
 
-# 使用例
-#Bone
-set_object_color("skull", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("costal cartilage", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("sternum", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("left clavicle", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("right clavicle", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("left scapula", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("right scapula", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("left humerus", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("right humerus", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C3 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C4 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C5 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C6 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C7 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T1 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T2 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T3 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T4 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T5 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T6 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T7 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T8 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T9 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T10 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T11 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T12 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+def setup_materials_and_apply(red_color=(1.0, 0.0, 0.0, 1.0), blue_color=(0.0, 0.0, 1.0, 1.0)):
+    """
+    赤と青のマテリアルを作成し、CubeとSphereに適用する
+    
+    Args:
+        red_color (tuple): 赤マテリアルの色 (R, G, B, A)
+        blue_color (tuple): 青マテリアルの色 (R, G, B, A)
+    """
+    print("=== マテリアル作成開始 ===")
+    
+    # マテリアルを作成
+    red_material = create_material("RedMaterial", red_color)
+    blue_material = create_material("BlueMaterial", blue_color)
+    
+    print("\n=== マテリアル適用開始 ===")
+    
+    # マテリアルをオブジェクトに適用
+    apply_material_to_object("Cube", "RedMaterial")
+    apply_material_to_object("Sphere", "BlueMaterial")
+    
+    print("\n=== 完了 ===")
+
+
+setup_materials_and_apply()
+
+
+bone = create_material("Bone", (0.509338, 0.448805, 0.390992, 1.0))
+apply_material_to_object("skull", "Bone")
+apply_material_to_object("costal cartilage", "Bone")
+apply_material_to_object("sternum", "Bone")
+apply_material_to_object("left clavicle", "Bone")
+apply_material_to_object("right clavicle", "Bone")
+apply_material_to_object("left scapula", "Bone")
+apply_material_to_object("right scapula", "Bone")
+apply_material_to_object("C3 vertebra", "Bone")
+apply_material_to_object("C4 vertebra", "Bone")
+apply_material_to_object("C5 vertebra", "Bone")
+apply_material_to_object("C6 vertebra", "Bone")
+apply_material_to_object("C7 vertebra", "Bone")
+apply_material_to_object("T1 vertebra", "Bone")
+apply_material_to_object("T2 vertebra", "Bone")
+apply_material_to_object("T3 vertebra", "Bone")
+apply_material_to_object("T4 vertebra", "Bone")
+apply_material_to_object("T5 vertebra", "Bone")
+apply_material_to_object("T6 vertebra", "Bone")
+apply_material_to_object("T7 vertebra", "Bone")
+apply_material_to_object("T8 vertebra", "Bone")
+apply_material_to_object("T9 vertebra", "Bone")
+apply_material_to_object("T10 vertebra", "Bone")
+apply_material_to_object("T11 vertebra", "Bone")
+apply_material_to_object("T12 vertebra", "Bone")
+
