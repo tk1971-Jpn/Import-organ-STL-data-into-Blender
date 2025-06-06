@@ -1,3 +1,15 @@
+import bpy
+
+def set_object_color(object_name, color, material_name):
+    """
+    指定されたオブジェクトに色を設定する関数
+    
+    Args:
+        object_name (str): オブジェクト名
+        color (tuple): RGBA値のタプル (R, G, B, A)
+        material_name (str): マテリアル名
+    """
+    obj = bpy.data.objects.get(object_name)
     
     if obj:
         # マテリアルを作成
