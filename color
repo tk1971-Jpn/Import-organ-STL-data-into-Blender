@@ -1,15 +1,3 @@
-import bpy
-
-def set_object_color(object_name, color, material_name):
-    """
-    指定されたオブジェクトに色を設定する関数
-    
-    Args:
-        object_name (str): オブジェクト名
-        color (tuple): RGBA値のタプル (R, G, B, A)
-        material_name (str): マテリアル名
-    """
-    obj = bpy.data.objects.get(object_name)
     
     if obj:
         # マテリアルを作成
@@ -35,29 +23,29 @@ def set_object_color(object_name, color, material_name):
 
 # 使用例
 #Bone
-set_object_color("skull", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("costal cartilage", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("sternum", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("left clavicle", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("right clavicle", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("left scapula", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("right scapula", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("left humerus", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("right humerus", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C3 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C4 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C5 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C6 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("C7 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T1 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T2 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T3 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T4 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T5 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T6 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T7 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T8 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T9 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T10 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T11 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
-set_object_color("T12 vertebra", (10.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("skull", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("costal cartilage", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("sternum", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("left clavicle", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("right clavicle", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("left scapula", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("right scapula", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("left humerus", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("right humerus", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("C3 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("C4 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("C5 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("C6 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("C7 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T1 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T2 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T3 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T4 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T5 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T6 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T7 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T8 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T9 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T10 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T11 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
+set_object_color("T12 vertebra", (0.509338, 0.448805, 0.390992, 1.0), "Bone")
