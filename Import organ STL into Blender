@@ -1,42 +1,38 @@
 import bpy
 import os
 
-# Directory path and initial offsets
 folder_path = '/Users/tkimura/Desktop/manifest-1737770826064/STL'
 x_move = 0
 y_move = 7.5
 z_move = 0
+size = 0.02
 
-# Get a list of STL file paths
-file_paths = [
-    os.path.join(folder_path, filename)
-    for filename in os.listdir(folder_path)
-    if os.path.isfile(os.path.join(folder_path, filename)) and filename.endswith('.stl')
-]
+# ファイルリストを取得
+file_names = [f for f in os.listdir(folder_path) if f.endswith('.stl')]
 
-# Get the common prefix of file paths
-common_path = os.path.commonprefix(file_paths)
-
-# Import STL files one by one
-for file_path in file_paths:
-    # Extract the file name and object name
-    name = os.path.basename(file_path)
-    obj_name = os.path.splitext(name)[0]
-
-    # Import the STL file
+for filename in file_names:
+    file_path = os.path.join(folder_path, filename)
+    
+    # 1. インポート
     bpy.ops.import_mesh.stl(filepath=file_path)
-
-    # Get the imported object
     obj = bpy.context.selected_objects[0]
-    obj.name = obj_name
 
-    # Resize the object
-    size = 0.02
+    # 2. オブジェクト名の決定
+    # 例: "106 2.0 Body...segmentation_left common iliac vein.stl"
+    # から拡張子を除去
+    full_name = os.path.splitext(filename)[0]
+    
+    # "segmentation_" より後ろだけを抽出したい場合
+    if "segmentation_" in full_name:
+        new_name = full_name.split("segmentation_")[-1]
+    else:
+        new_name = full_name
+
+    obj.name = new_name
+    
+    # 3. トランスフォーム設定
     obj.scale = (size, size, size)
-
-    # Adjust rotation and position
-    obj.rotation_euler[0] = -1.5708  # Rotate around the X-axis
+    obj.rotation_euler[0] = -1.5708  # 約 -90度
     obj.location = (x_move, y_move, z_move)
-
-# rename object
-    obj.name = obj.name[len(common_path)-len(folder_path)-1:]
+    
+    print(f"Imported: {obj.name}")
