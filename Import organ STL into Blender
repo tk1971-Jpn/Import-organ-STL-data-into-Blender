@@ -1,7 +1,7 @@
 import bpy
 import os
 
-folder_path = '/Users/tkimura/Desktop/manifest-1737770826064/STL'
+folder_path = '/Users/tkimura/Desktop/STL'
 x_move = 0
 y_move = 7.5
 z_move = 0
@@ -13,16 +13,13 @@ file_names = [f for f in os.listdir(folder_path) if f.endswith('.stl')]
 for filename in file_names:
     file_path = os.path.join(folder_path, filename)
     
-    # 1. インポート
-    bpy.ops.import_mesh.stl(filepath=file_path)
+    # 1. インポート (Blender 4.x 対応版)
+    bpy.ops.wm.stl_import(filepath=file_path)
     obj = bpy.context.selected_objects[0]
 
     # 2. オブジェクト名の決定
-    # 例: "106 2.0 Body...segmentation_left common iliac vein.stl"
-    # から拡張子を除去
     full_name = os.path.splitext(filename)[0]
     
-    # "segmentation_" より後ろだけを抽出したい場合
     if "segmentation_" in full_name:
         new_name = full_name.split("segmentation_")[-1]
     else:
